@@ -77,6 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             // loop through the cursor (result set) and create new customer objects. Put them into the return list.
             do {
+
+                // Getting table Values
                 int customerId = cursor.getInt(0);
                 String customerName = cursor.getString(1);
                 int customerAge = cursor.getInt(2);
