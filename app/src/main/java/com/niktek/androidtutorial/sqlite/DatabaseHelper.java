@@ -47,9 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_ACTIVE_CUSTOMER, customerModel.isActive());
 
         long result = db.insert(CUSTOMER_TABLE, null, cv);
-        if (result == -1)
-            return false;
-        return true;
+        return result != -1;
     }
 
     public boolean deleteOne(CustomerModel customerModel) {
@@ -59,8 +57,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()){
+            cursor.close();
             return true;
         }else{
+            cursor.close();
             return false;
         }
     }
@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int customerId = cursor.getInt(0);
                 String customerName = cursor.getString(1);
                 int customerAge = cursor.getInt(2);
-                boolean customerActive = cursor.getInt(3) == 1 ? true : false;
+                boolean customerActive = cursor.getInt(3) == 1;
 
                 CustomerModel newCustomer = new CustomerModel(customerId, customerName, customerAge, customerActive);
                 returnList.add(newCustomer);

@@ -76,7 +76,7 @@ public class SqLite extends AppCompatActivity {
 
         lv_customerList.setOnItemClickListener((parent, view, position, id) -> {
             CustomerModel customerModel = (CustomerModel) parent.getItemAtPosition(position);
-            databaseHelper.deleteOne(customerModel);
+            boolean status =  databaseHelper.deleteOne(customerModel);
             showCustomersOnListView(databaseHelper);
             Toast.makeText(this, "Deleted: " + customerModel.toString(), Toast.LENGTH_SHORT).show();
         });

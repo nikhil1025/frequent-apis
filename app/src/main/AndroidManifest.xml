@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTutorial">
         <activity android:name=".sqlite.SqLite">
+
+        </activity>
+        <activity android:name=".mapsApi.MapInfo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".mapsApi.MapInfo">
-
         </activity>
         <activity android:name=".activities.viewModels.MainActivity2" />
         <activity android:name=".activities.fragments.MainActivity"></activity>

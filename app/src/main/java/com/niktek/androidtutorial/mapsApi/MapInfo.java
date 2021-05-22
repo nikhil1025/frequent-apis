@@ -30,7 +30,7 @@ public class MapInfo extends AppCompatActivity implements LocationListener {
     Button get_location;
     LocationManager locationManager;
     FragmentManager manager;
-    Loader progress_bar = new Loader();
+    Boolean getOnceStatusTrue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +50,12 @@ public class MapInfo extends AppCompatActivity implements LocationListener {
         }
 
         get_location.setOnClickListener(v -> {
+            getOnceStatusTrue = true;
             getLocation();
             manager.beginTransaction()
                     .setReorderingAllowed(true)
                     .addToBackStack("progress_bar")
-                    .replace(R.id.progress_bar, progress_bar).commit();
+                    .replace(R.id.progress_bar, new Loader()).commit();
         });
     }
 
@@ -70,6 +71,13 @@ public class MapInfo extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        if (getOnceStatusTrue) {
+            getOnce(location);
+            getOnceStatusTrue = false;
+        }
+    }
+
+    private void getOnce(@NonNull Location location) {
         Toast.makeText(this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();
         try {
             Geocoder geocoder = new Geocoder(MapInfo.this, Locale.getDefault());
@@ -80,15 +88,5 @@ public class MapInfo extends AppCompatActivity implements LocationListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
     }
 }
